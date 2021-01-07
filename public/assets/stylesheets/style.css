@@ -1,0 +1,10 @@
+.logo {
+  padding: 0 16px;
+  height: 24px;
+}
+
+.search {
+  display: flex;
+  vertical-align: middle;
+  margin: 12px;
+}
