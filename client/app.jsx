@@ -16,6 +16,7 @@ class App extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
     this.handleSearchClick = this.handleSearchClick.bind(this);
   }
@@ -37,6 +38,12 @@ class App extends React.Component {
     this.setState({ query: e.target.value });
   }
 
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.search();
+    }
+  }
+
   handlePageClick(e) {
     let { query } = this.state;
     let page = e.selected + 1;
@@ -52,7 +59,10 @@ class App extends React.Component {
 
   handleSearchClick(e) {
     e.preventDefault();
+    this.search();
+  }
 
+  search() {
     let { query } = this.state;
 
     if (query !== "") {
@@ -75,14 +85,15 @@ class App extends React.Component {
 
     return (
       <>
-        <div className="search">
-          <img className="logo" src="assets/images/hooli.png" />
-          <form>
-            <input type="text" onChange={this.handleChange}/>
-            <button type="submit" onClick={this.handleSearchClick}>Search!</button>
-          </form>
-        </div>
-        <hr />
+        <nav className="navbar navbar-light bg-light sticky-top">
+          <div class="container-fluid justify-content-start">
+            <a className="navbar-brand" href="#"><img className="logo" src="assets/images/hooli.png" height="30" /></a>
+            <form className="d-flex">
+              <input type="search" className="form-control me-2" onChange={this.handleChange} onKeyPress={this.handleKeyPress} />
+              <button type="submit" className="btn btn-outline-secondary" onClick={this.handleSearchClick}>Search</button>
+            </form>
+          </div>
+        </nav>
         <SearchResults results={results} />
         {totalCount > 0 &&
           <ReactPaginate
@@ -90,18 +101,18 @@ class App extends React.Component {
             breakClassName={'page-item'}
             breakLinkClassName={'page-link'}
             breakLabel={'...'}
-            containerClassName={'pagination'}
-            marginPagesDisplayed={2}
+            containerClassName={'pagination pagination-sm justify-content-center'}
+            marginPagesDisplayed={0}
             nextClassName={'page-item'}
-            nextLabel={'Next'}
+            nextLabel={'>>'}
             nextLinkClassName={'page-link'}
             onPageChange={this.handlePageClick}
             pageClassName={'page-item'}
             pageCount={totalCount / EVENTS_PER_PAGE}
             pageLinkClassName={'page-link'}
-            pageRangeDisplayed={5}
+            pageRangeDisplayed={4}
             previousClassName={'page-item'}
-            previousLabel={'Previous'}
+            previousLabel={'<<'}
             previousLinkClassName={'page-link'}
           />
         }

@@ -6,15 +6,10 @@ const Event = ({ date, description }) => {
   }
 
   return (
-    <div>
-      <p>
-        <b>Date:</b>{" "}
-        {date[0] === "-" ? date.slice(1) + " B.C." : date + " A.D."}
-      </p>
-      <div>
-        <b>Description:</b> {description}
-      </div>
-    </div>
+    <>
+      <dt className="col-2">{date[0] === "-" ? date.slice(1) + " B.C." : date + " A.D."}</dt>
+      <dd className="col-10">{description}</dd>
+    </>
   );
 };
 

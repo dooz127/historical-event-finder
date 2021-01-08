@@ -1896,6 +1896,7 @@ var App = /*#__PURE__*/function (_React$Component) {
       totalCount: 0
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this.handleKeyPress = _this.handleKeyPress.bind(_assertThisInitialized(_this));
     _this.handlePageClick = _this.handlePageClick.bind(_assertThisInitialized(_this));
     _this.handleSearchClick = _this.handleSearchClick.bind(_assertThisInitialized(_this));
     return _this;
@@ -1926,6 +1927,13 @@ var App = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "handleKeyPress",
+    value: function handleKeyPress(e) {
+      if (e.key === 'Enter') {
+        this.search();
+      }
+    }
+  }, {
     key: "handlePageClick",
     value: function handlePageClick(e) {
       var _this2 = this;
@@ -1942,9 +1950,14 @@ var App = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSearchClick",
     value: function handleSearchClick(e) {
+      e.preventDefault();
+      this.search();
+    }
+  }, {
+    key: "search",
+    value: function search() {
       var _this3 = this;
 
-      e.preventDefault();
       var query = this.state.query;
 
       if (query !== "") {
@@ -1965,36 +1978,47 @@ var App = /*#__PURE__*/function (_React$Component) {
       var _this$state = this.state,
           results = _this$state.results,
           totalCount = _this$state.totalCount;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "search"
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("nav", {
+        className: "navbar navbar-light bg-light sticky-top"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        "class": "container-fluid justify-content-start"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+        className: "navbar-brand",
+        href: "#"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         className: "logo",
-        src: "assets/images/hooli.png"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-        type: "text",
-        onChange: this.handleChange
+        src: "assets/images/hooli.png",
+        height: "30"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+        className: "d-flex"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "search",
+        className: "form-control me-2",
+        onChange: this.handleChange,
+        onKeyPress: this.handleKeyPress
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         type: "submit",
+        className: "btn btn-outline-secondary",
         onClick: this.handleSearchClick
-      }, "Search!"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SearchResults_jsx__WEBPACK_IMPORTED_MODULE_3__.default, {
+      }, "Search")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SearchResults_jsx__WEBPACK_IMPORTED_MODULE_3__.default, {
         results: results
       }), totalCount > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((react_paginate__WEBPACK_IMPORTED_MODULE_2___default()), {
         activeClassName: 'active',
         breakClassName: 'page-item',
         breakLinkClassName: 'page-link',
         breakLabel: '...',
-        containerClassName: 'pagination',
-        marginPagesDisplayed: 2,
+        containerClassName: 'pagination pagination-sm justify-content-center',
+        marginPagesDisplayed: 0,
         nextClassName: 'page-item',
-        nextLabel: 'Next',
+        nextLabel: '>>',
         nextLinkClassName: 'page-link',
         onPageChange: this.handlePageClick,
         pageClassName: 'page-item',
         pageCount: totalCount / EVENTS_PER_PAGE,
         pageLinkClassName: 'page-link',
-        pageRangeDisplayed: 5,
+        pageRangeDisplayed: 4,
         previousClassName: 'page-item',
-        previousLabel: 'Previous',
+        previousLabel: '<<',
         previousLinkClassName: 'page-link'
       }));
     }
@@ -2030,7 +2054,11 @@ var Event = function Event(_ref) {
     date = date.split("/")[0];
   }
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Date:"), " ", date[0] === "-" ? date.slice(1) + " B.C." : date + " A.D."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Description:"), " ", description));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("dt", {
+    className: "col-2"
+  }, date[0] === "-" ? date.slice(1) + " B.C." : date + " A.D."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("dd", {
+    className: "col-10"
+  }, description));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Event);
@@ -2055,11 +2083,13 @@ __webpack_require__.r(__webpack_exports__);
 
 var SearchResults = function SearchResults(_ref) {
   var results = _ref.results;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, results.map(function (result, idx) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("dl", {
+    className: "row m-3"
+  }, results.map(function (event, idx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Event_jsx__WEBPACK_IMPORTED_MODULE_1__.default, {
       key: idx,
-      date: result.date,
-      description: result.description
+      date: event.date,
+      description: event.description
     });
   }));
 };

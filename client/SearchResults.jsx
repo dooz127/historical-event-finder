@@ -2,11 +2,11 @@ import React from 'react';
 import Event from './Event.jsx';
 
 const SearchResults = ({results}) => (
-  <div>
-    {results.map((result, idx) => (
-      <Event key={idx} date={result.date} description={result.description} />
+  <dl className="row m-3">
+    {results.map((event, idx) => (
+      <Event key={idx} date={event.date} description={event.description} />
     ))}
-  </div>
+  </dl>
 );
 
 export default SearchResults;
